@@ -21,7 +21,7 @@
 //https://wowpedia.fandom.com/wiki/Quality
 
 class Weapon {
-    constructor(rarity = undefined, quality = "poor", material = "bronze", type = "dagger", enchantment = undefined, modifier = undefined){
+    constructor(rarity = undefined, quality = undefined, material = undefined, type = undefined, enchantment = undefined, modifier = undefined){
         this.rarity = this.setRarity();
         this.quality = this.setQuality();
         this.material = this.setMaterial();
@@ -31,23 +31,33 @@ class Weapon {
     }
 
     getItemName(){
-        if(this.rarity === undefined && this.enchantment === undefined && this.modifier === undefined){
-            console.log(`${this.quality} ${this.material} ${this.type}`);
-        } else if (this.rarity === undefined && this.enchantment === undefined) {
-            console.log(`${this.quality} ${this.material} ${this.type} +${this.modifier}`);
-        } else if (this.rarity === undefined && this.modifier === undefined) {
-            console.log(`${this.quality} ${this.material} ${this.type} of ${this.enchantment}`);
-        } else if (this.enchantment === undefined && this.modifier === undefined) {
-            console.log(`${this.rarity} ${this.quality} ${this.material} ${this.type}`);
-        } else if (this.rarity === undefined) {
-            console.log(`${this.quality} ${this.material} ${this.type} of ${this.enchantment} +${this.modifier}`);
-        } else if (this.enchantment === undefined) {
-            console.log(`${this.rarity} ${this.quality} ${this.material} ${this.type} +${this.modifier}`);
-        } else if (this.modifier === undefined) {
-            console.log(`${this.rarity} ${this.quality} ${this.material} ${this.type} of ${this.enchantment}`);
-        } else {
-            console.log(`${this.rarity} ${this.quality} ${this.material} ${this.type} of ${this.enchantment} +${this.modifier}`);
+        let itemName = "";
+
+        if(this.rarity != undefined) {
+            itemName += `${this.rarity} `;
         }
+
+        if(this.quality != undefined) {
+            itemName += `${this.quality} `;
+        }
+
+        if(this.material != undefined) {
+            itemName += `${this.material} `;
+        }
+
+        if(this.type != undefined) {
+            itemName += `${this.type} `;
+        }
+
+        if(this.enchantment != undefined) {
+            itemName += `of ${this.enchantment} `;
+        }
+
+        if(this.modifier != undefined) {
+            itemName += `+${this.modifier}`;
+        }
+        console.log(itemName);
+        return itemName;
     }
 
     setRarity(){
@@ -79,10 +89,10 @@ class Weapon {
             return "Superior";
         } else if (random >= 60) {
             return "Fine";
-        } else if (random >= 40) {
-            return "Quality"; //Standard.. Default?
+        } else if (random <= 25) {
+            return "Poor"; //Standard.. Default?
         } else {
-            return "Poor";
+            return undefined;
         }
     }
 
@@ -90,7 +100,7 @@ class Weapon {
         let random = Math.round(Math.random() * 100);
 
         if(random >= 90) {
-            return "Adamantite";
+            return "Adamant";
         } else if (random >= 70) {
             return "Mithril";
         } else if (random >= 40) {
